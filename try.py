@@ -5,7 +5,7 @@ from sklearn.svm import LinearSVC
 import joblib
 
 # Load dataset
-data = pd.read_csv("Emotion_final.csv")  # Update "your_dataset.csv" with your dataset file path
+data = pd.read_csv("Emotion_final.csv")  
 
 # Train the model
 vectorizer = TfidfVectorizer()
