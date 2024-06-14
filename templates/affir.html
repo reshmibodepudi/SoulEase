@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal Entry</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Journal Entry</h1>
+    <textarea id="journal_entry" rows="4" placeholder="Write something in your journal..."></textarea><br>
+    <button onclick="submitJournal()">Submit</button>
+    <div id="result"></div>
+
+    <script>
+        function submitJournal() {
+            var journal_entry = document.getElementById("journal_entry").value;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/process", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    document.getElementById("result").innerHTML = "<p>" + response.affirmation + "</p>";
+                }
+            };
+            xhr.send("journal_entry=" + encodeURIComponent(journal_entry));
+        }
+    </script>
+</body>
+</html>
